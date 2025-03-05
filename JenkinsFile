@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Cloner le dépôt') {
             steps {
-                git branch: 'main', url: 'https://github.com/ggestio_etablissement.git'
+                git branch: 'main', url: 'https://github.com/gestio_etablissement.git'
             }
         }
 
