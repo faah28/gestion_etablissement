@@ -20,7 +20,7 @@ WORKDIR /var/www/html
 
 # 6️⃣ Copie des fichiers Symfony (on exclut vendor et var dans .dockerignore)
 # 6️⃣ Copie du dossier microservices dans www/html
-COPY ./Gestion-etablissement ./var/www/html/
+COPY .gestion-cours ./var/www/html/
 
 # 7️⃣ Installation des dépendances Symfony
 RUN composer install --no-dev --optimize-autoloader
