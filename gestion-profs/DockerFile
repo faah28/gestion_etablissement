@@ -19,7 +19,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # 6️⃣ Copie des fichiers Symfony (on exclut vendor et var dans .dockerignore)
-COPY ../Gestion-etablissement/gestion-profs ./var/www/html/gestion-profs
+COPY ../../Gestion-etablissement/gestion-profs ./var/www/html/gestion-profs
 
 # 7️⃣ Installation des dépendances Symfony
 RUN composer install --no-dev --optimize-autoloader
