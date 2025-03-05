@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY = "dockerhub_username" // Remplacez par votre nom Docker Hub
-        PROJECT_NAME = "gestion-projet"
+        REGISTRY = "faah28" // Remplacez par votre nom Docker Hub
+        PROJECT_NAME = "gestion-etablissement"
     }
 
     stages {
         stage('Cloner le dépôt') {
             steps {
-                git branch: 'main', url: 'https://github.com/votre-repo.git'
+                git branch: 'main', url: 'https://github.com/ggestio_etablissement.git'
             }
         }
 
