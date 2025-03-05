@@ -36,7 +36,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: passer
       DB_DATABASE: gestion_cour
-    command: php -S 0.0.0.0:8000 -t public
+    command: php -S 0.0.0.0:8001 -t public
 
   gestion-emploi-temps:
     build: ./gestion-emploi-temps
@@ -55,7 +55,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: passer
       DB_DATABASE: gestion_emploi_temps
-    command: php -S 0.0.0.0:8000 -t public
+    command: php -S 0.0.0.0:8002 -t public
 
   gestion-etudiants:
     build: ./gestion-etudiants
@@ -74,7 +74,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: passer
       DB_DATABASE: gestion_etudiant
-    command: php -S 0.0.0.0:8000 -t public
+    command: php -S 0.0.0.0:8003 -t public
 
   gestion-profs:
     build: ./gestion-profs
@@ -93,7 +93,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: passer
       DB_DATABASE: gestion_prof
-    command: php -S 0.0.0.0:8000 -t public
+    command: php -S 0.0.0.0:8004 -t public
 
   # Ajout des bases de données MySQL pour chaque service
   db-gestion-classes:
