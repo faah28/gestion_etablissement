@@ -23,7 +23,7 @@ services:
     build: ./gestion-cours
     container_name: gestion-cours
     ports:
-      - "8001:8000"
+      - "8001:8001"
     networks:
       - gestion-network
     volumes:
@@ -42,7 +42,7 @@ services:
     build: ./gestion-emploi-temps
     container_name: gestion-emploi-temps
     ports:
-      - "8002:8000"
+      - "8002:8002"
     networks:
       - gestion-network
     volumes:
@@ -61,7 +61,7 @@ services:
     build: ./gestion-etudiants
     container_name: gestion-etudiants
     ports:
-      - "8003:8000"
+      - "8003:8003"
     networks:
       - gestion-network
     volumes:
@@ -80,7 +80,7 @@ services:
     build: ./gestion-profs
     container_name: gestion-profs
     ports:
-      - "8004:8000"
+      - "8004:8004"
     networks:
       - gestion-network
     volumes:
