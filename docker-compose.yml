@@ -1,0 +1,152 @@
+version: "3.8"
+
+services:
+  gestion-classes:
+    build: ./gestion-classes
+    container_name: gestion-classes
+    ports:
+      - "8000:8000"
+    networks:
+      - gestion-network
+    volumes:
+      - ./gestion-classes:/var/www/html
+    depends_on:
+      - db-gestion-classes
+    environment:
+      DB_HOST: db-gestion-classes
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: passer
+      DB_DATABASE: gestion_classe
+    command: php -S 0.0.0.0:8000 -t public
+
+  gestion-cours:
+    build: ./gestion-cours
+    container_name: gestion-cours
+    ports:
+      - "8001:8000"
+    networks:
+      - gestion-network
+    volumes:
+      - ./gestion-cours:/var/www/html
+    depends_on:
+      - db-gestion-cours
+    environment:
+      DB_HOST: db-gestion-cours
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: passer
+      DB_DATABASE: gestion_cour
+    command: php -S 0.0.0.0:8000 -t public
+
+  gestion-emploi-temps:
+    build: ./gestion-emploi-temps
+    container_name: gestion-emploi-temps
+    ports:
+      - "8002:8000"
+    networks:
+      - gestion-network
+    volumes:
+      - ./gestion-emploi-temps:/var/www/html
+    depends_on:
+      - db-gestion-emploi-temps
+    environment:
+      DB_HOST: db-gestion-emploi-temps
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: passer
+      DB_DATABASE: gestion_emploi_temps
+    command: php -S 0.0.0.0:8000 -t public
+
+  gestion-etudiants:
+    build: ./gestion-etudiants
+    container_name: gestion-etudiants
+    ports:
+      - "8003:8000"
+    networks:
+      - gestion-network
+    volumes:
+      - ./gestion-etudiants:/var/www/html
+    depends_on:
+      - db-gestion-etudiants
+    environment:
+      DB_HOST: db-gestion-etudiants
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: passer
+      DB_DATABASE: gestion_etudiant
+    command: php -S 0.0.0.0:8000 -t public
+
+  gestion-profs:
+    build: ./gestion-profs
+    container_name: gestion-profs
+    ports:
+      - "8004:8000"
+    networks:
+      - gestion-network
+    volumes:
+      - ./gestion-profs:/var/www/html
+    depends_on:
+      - db-gestion-profs
+    environment:
+      DB_HOST: db-gestion-profs
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: passer
+      DB_DATABASE: gestion_prof
+    command: php -S 0.0.0.0:8000 -t public
+
+  # Ajout des bases de données MySQL pour chaque service
+  db-gestion-classes:
+    image: mysql:5.7
+    container_name: db-gestion-classes
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: passer
+      MYSQL_DATABASE: gestion_classe
+    networks:
+      - gestion-network
+
+  db-gestion-cours:
+    image: mysql:5.7
+    container_name: db-gestion-cours
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: passer
+      MYSQL_DATABASE: gestion_cour
+    networks:
+      - gestion-network
+
+  db-gestion-emploi-temps:
+    image: mysql:5.7
+    container_name: db-gestion-emploi-temps
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: passer
+      MYSQL_DATABASE: gestion_emploi_temps
+    networks:
+      - gestion-network
+
+  db-gestion-etudiants:
+    image: mysql:5.7
+    container_name: db-gestion-etudiants
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: passer
+      MYSQL_DATABASE: gestion_etudiant
+    networks:
+      - gestion-network
+
+  db-gestion-profs:
+    image: mysql:5.7
+    container_name: db-gestion-profs
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: passer
+      MYSQL_DATABASE: gestion_prof
+    networks:
+      - gestion-network
+
+networks:
+  gestion-network:
+    driver: bridge

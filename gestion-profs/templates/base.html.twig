@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Bienvenue!{% endblock %}</title>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        {% block stylesheets %}
+        <!-- Place for additional CSS files if needed -->
+        {% endblock %}
+    </head>
+    <body>
+        <!-- Navigation bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="{{ path('app_classe') }}">Gestion Établissement</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_classe') }}">Classes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_cours') }}">Cours</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_etudiants') }}">Étudiants</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_profs') }}">Professeurs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_emploie_temps') }}">Emploi du Temps</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <div class="container mt-4">
+            {% block body %}
+            <!-- This is where page-specific content will be rendered -->
+            {% endblock %}
+        </div>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        {% block javascripts %}
+        <!-- Place for additional JavaScript files -->
+        {% endblock %}
+    </body>
+</html>

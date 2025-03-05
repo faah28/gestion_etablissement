@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Étudiants{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="my-4">Liste des Étudiants</h1>
+
+    <!-- Affichage des étudiants dans une table -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for etudiant in etudiants %}
+            <tr>
+                <td>{{ etudiant.id }}</td>
+                <td>{{ etudiant.nom }}</td>
+                <td>{{ etudiant.prenom }}</td>
+                <td>{{ etudiant.email }}</td>
+                <td>
+                    <a href="{{ path('app_etudiant_edit', {'id': etudiant.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                    <a href="{{ path('app_etudiant_delete', {'id': etudiant.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?')">Supprimer</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center">Aucun étudiant trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_etudiant_new') }}" class="btn btn-success mt-3">Ajouter un Étudiant</a>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+                                                            # 1️⃣ Choix de l'image PHP avec Apache
+FROM php:8.2-apache
+
+# 2️⃣ Installation des extensions PHP nécessaires
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    libzip-dev \
+    unzip \
+    git \
+    && docker-php-ext-install pdo pdo_mysql zip
+
+# 3️⃣ Activation du module Apache rewrite (utile pour Symfony)
+RUN a2enmod rewrite
+
+# 4️⃣ Installation de Composer (Gestionnaire de dépendances PHP)
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# 5️⃣ Définition du répertoire de travail
+WORKDIR /var/www/html
+
+# 6️⃣ Copie des fichiers Symfony (on exclut vendor et var dans .dockerignore)
+COPY . .
+
+# 7️⃣ Installation des dépendances Symfony
+RUN composer install --no-dev --optimize-autoloader
+
+# 8️⃣ Attribution des permissions correctes
+RUN chown -R www-data:www-data /var/www/html/var /var/www/html/public /var/www/html/config
+
+# 9️⃣ Exposition du port Apache
+EXPOSE 80
+
+# 🔟 Démarrage d'Apache
+CMD ["apache2-foreground"]
+                                                                                                                                                                                                                                                                                    

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Professeurs{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Liste des Professeurs</h1>
+        
+        <!-- Ajout d'un bouton pour ajouter un professeur -->
+        <a href="{{ path('ajouter_prof') }}" class="btn btn-primary mb-3">Ajouter un Professeur</a>
+        
+        <!-- Table des professeurs -->
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Spécialité</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prof in profs %}
+                    <tr>
+                        <td>{{ prof.id }}</td>
+                        <td>{{ prof.nom }}</td>
+                        <td>{{ prof.specialite }}</td>
+                        <td>{{ prof.email }}</td>
+                        <td>
+                            <a href="{{ path('modifier_prof', {'id': prof.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            <a href="{{ path('supprimer_prof', {'id': prof.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce professeur ?')">Supprimer</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center">Aucun professeur trouvé.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

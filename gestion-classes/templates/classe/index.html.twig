@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Classes{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Liste des Classes</h1>
+
+    <a href="{{ path('app_classe_new') }}" class="btn btn-primary mb-3">Ajouter une Classe</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom de la Classe</th>
+                <th>Niveau</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for classe in classes %}
+                <tr>
+                    <td>{{ classe.id }}</td>
+                    <td>{{ classe.nomClasse }}</td>
+                    <td>{{ classe.niveau }}</td>
+                    <td>
+                        <a href="{{ path('app_classe_edit', { id: classe.id }) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{{ path('app_classe_delete', { id: classe.id }) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette classe ?');">Supprimer</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">Aucune classe trouvée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

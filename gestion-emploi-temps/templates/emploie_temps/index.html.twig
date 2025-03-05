@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Emplois du Temps{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Liste des Emplois du Temps</h1>
+
+    <a href="{{ path('app_emploie_temps_new') }}" class="btn btn-primary mb-3">Ajouter un Emploi du Temps</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Jour</th>
+                <th>Heure</th>
+                <th>Salle</th>
+                <th>Professeur</th>
+                <th>Classe</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emploi in emplois %}
+                <tr>
+                    <td>{{ emploi.id }}</td>
+                    <td>{{ emploi.jour }}</td>
+                    <td>{{ emploi.heure }}</td>
+                    <td>{{ emploi.salle }}</td>
+                    <td>{{ emploi.prof.nom }} {{ emploi.prof.prenom }}</td>
+                    <td>{{ emploi.classe.nomClasse }}</td>
+                    <td>
+                        <a href="{{ path('app_emploie_temps_edit', { id: emploi.id }) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{{ path('app_emploie_temps_delete', { id: emploi.id }) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet emploi du temps ?');">Supprimer</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Aucun emploi du temps trouvé.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
