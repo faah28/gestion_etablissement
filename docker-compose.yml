@@ -7,8 +7,8 @@ services:
       - "8000:8000"
     networks:
       - gestion-network
-    # volumes:
-    #   - ./gestion-classes:/var/www/html
+    volumes:
+      - ./gestion-classes:/var/www/html
     depends_on:
       - db-gestion-classes
     environment:
@@ -26,8 +26,8 @@ services:
       - "8001:8001"
     networks:
       - gestion-network
-    #volumes:
-     # - ./gestion-cours:/var/www/html
+    volumes:
+      - ./gestion-cours:/var/www/html
     depends_on:
       - db-gestion-cours
     environment:
@@ -45,8 +45,8 @@ services:
       - "8002:8002"
     networks:
       - gestion-network
-    #volumes:
-      #- ./gestion-emploi-temps:/var/www/html
+    volumes:
+      - ./gestion-emploi-temps:/var/www/html
     depends_on:
       - db-gestion-emploi-temps
     environment:
@@ -64,8 +64,8 @@ services:
       - "8003:8003"
     networks:
       - gestion-network
-    #volumes:
-     # - ./gestion-etudiants:/var/www/html
+    volumes:
+      - ./gestion-etudiants:/var/www/html
     depends_on:
       - db-gestion-etudiants
     environment:
@@ -83,8 +83,8 @@ services:
       - "8004:8004"
     networks:
       - gestion-network
-    #volumes:
-     # - ./gestion-profs:/var/www/html
+    volumes:
+      - ./gestion-profs:/var/www/html
     depends_on:
       - db-gestion-profs
     environment:
