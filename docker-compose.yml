@@ -1,101 +1,112 @@
+version: '3.8'
 
 services:
   gestion-classes:
     build: ./gestion-classes
     container_name: gestion-classes
+    restart: always
     ports:
       - "8000:8000"
     networks:
       - gestion-network
     volumes:
-      - ./gestion-classes:/var/www/html
+      - ./gestion-classes:/app
     depends_on:
-      - db-gestion-classes
+      db-gestion-classes:
+        condition: service_healthy
     environment:
       DB_HOST: db-gestion-classes
       DB_PORT: 3306
       DB_USERNAME: root
       DB_PASSWORD: passer
       DB_DATABASE: gestion_classe
-    command: php -S 0.0.0.0:8000 -t public
+    command: php -S 0.0.0.0:8000 -t /app/public
 
   gestion-cours:
     build: ./gestion-cours
     container_name: gestion-cours
+    restart: always
     ports:
       - "8001:8001"
     networks:
       - gestion-network
     volumes:
-      - ./gestion-cours:/var/www/html
+      - ./gestion-cours:/app
     depends_on:
-      - db-gestion-cours
+      db-gestion-cours:
+        condition: service_healthy
     environment:
       DB_HOST: db-gestion-cours
       DB_PORT: 3306
       DB_USERNAME: root
       DB_PASSWORD: passer
       DB_DATABASE: gestion_cour
-    command: php -S 0.0.0.0:8001 -t public
+    command: php -S 0.0.0.0:8001 -t /app/public
 
   gestion-emploi-temps:
     build: ./gestion-emploi-temps
     container_name: gestion-emploi-temps
+    restart: always
     ports:
       - "8002:8002"
     networks:
       - gestion-network
     volumes:
-      - ./gestion-emploi-temps:/var/www/html
+      - ./gestion-emploi-temps:/app
     depends_on:
-      - db-gestion-emploi-temps
+      db-gestion-emploi-temps:
+        condition: service_healthy
     environment:
       DB_HOST: db-gestion-emploi-temps
       DB_PORT: 3306
       DB_USERNAME: root
       DB_PASSWORD: passer
       DB_DATABASE: gestion_emploi_temps
-    command: php -S 0.0.0.0:8002 -t public
+    command: php -S 0.0.0.0:8002 -t /app/public
 
   gestion-etudiants:
     build: ./gestion-etudiants
     container_name: gestion-etudiants
+    restart: always
     ports:
       - "8003:8003"
     networks:
       - gestion-network
     volumes:
-      - ./gestion-etudiants:/var/www/html
+      - ./gestion-etudiants:/app
     depends_on:
-      - db-gestion-etudiants
+      db-gestion-etudiants:
+        condition: service_healthy
     environment:
       DB_HOST: db-gestion-etudiants
       DB_PORT: 3306
       DB_USERNAME: root
       DB_PASSWORD: passer
       DB_DATABASE: gestion_etudiant
-    command: php -S 0.0.0.0:8003 -t public
+    command: php -S 0.0.0.0:8003 -t /app/public
 
   gestion-profs:
     build: ./gestion-profs
     container_name: gestion-profs
+    restart: always
     ports:
       - "8004:8004"
     networks:
       - gestion-network
     volumes:
-      - ./gestion-profs:/var/www/html
+      - ./gestion-profs:/app
     depends_on:
-      - db-gestion-profs
+      db-gestion-profs:
+        condition: service_healthy
     environment:
       DB_HOST: db-gestion-profs
       DB_PORT: 3306
       DB_USERNAME: root
       DB_PASSWORD: passer
       DB_DATABASE: gestion_prof
-    command: php -S 0.0.0.0:8004 -t public
+    command: php -S 0.0.0.0:8004 -t /app/public
 
-  # Ajout des bases de données MySQL pour chaque service
+  # Bases de données MySQL
   db-gestion-classes:
     image: mysql:5.7
     container_name: db-gestion-classes
@@ -105,6 +116,10 @@ services:
       MYSQL_DATABASE: gestion_classe
     networks:
       - gestion-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
 
   db-gestion-cours:
     image: mysql:5.7
@@ -115,6 +130,10 @@ services:
       MYSQL_DATABASE: gestion_cour
     networks:
       - gestion-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
 
   db-gestion-emploi-temps:
     image: mysql:5.7
@@ -125,6 +144,10 @@ services:
       MYSQL_DATABASE: gestion_emploi_temps
     networks:
       - gestion-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
 
   db-gestion-etudiants:
     image: mysql:5.7
@@ -135,6 +158,10 @@ services:
       MYSQL_DATABASE: gestion_etudiant
     networks:
       - gestion-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
 
   db-gestion-profs:
     image: mysql:5.7
@@ -145,6 +172,10 @@ services:
       MYSQL_DATABASE: gestion_prof
     networks:
       - gestion-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
 
 networks:
   gestion-network:
