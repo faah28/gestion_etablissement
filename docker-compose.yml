@@ -113,7 +113,8 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: passer
-      MYSQL_DATABASE: gestion_classe
+    volumes:
+      - ./data/db-gestion-classes:/var/lib/mysql  # Lien vers le répertoire de données local
     networks:
       - gestion-network
     healthcheck:
@@ -127,7 +128,8 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: passer
-      MYSQL_DATABASE: gestion_cour
+    volumes:
+      - ./data/db-gestion-cours:/var/lib/mysql  # Lien vers le répertoire de données local
     networks:
       - gestion-network
     healthcheck:
@@ -141,7 +143,8 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: passer
-      MYSQL_DATABASE: gestion_emploi_temps
+    volumes:
+      - ./data/db-gestion-emploi-temps:/var/lib/mysql  # Lien vers le répertoire de données local
     networks:
       - gestion-network
     healthcheck:
@@ -155,7 +158,8 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: passer
-      MYSQL_DATABASE: gestion_etudiant
+    volumes:
+      - ./data/db-gestion-etudiants:/var/lib/mysql  # Lien vers le répertoire de données local
     networks:
       - gestion-network
     healthcheck:
@@ -169,7 +173,8 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: passer
-      MYSQL_DATABASE: gestion_prof
+    volumes:
+      - ./data/db-gestion-profs:/var/lib/mysql  # Lien vers le répertoire de données local
     networks:
       - gestion-network
     healthcheck:
