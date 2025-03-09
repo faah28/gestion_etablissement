@@ -1,5 +1,5 @@
  // Remplacez par votre nom Docker Hub    https://github.com/faah28/gestion_etablissement.git
-       pipeline { 
+     pipeline { 
     agent any
 
     
@@ -10,31 +10,15 @@
             }
         }
 
-
-
         stage('Construire les images Docker') {
             steps {
                 script {
-                    bat "docker-compose build"
-                }
-            }
-        }
-
-
-
-        stage('Push de l\'image Docker') {
-            steps {
-                script {
-                    def registry = (ENV == 'dev' || ENV == 'staging') ? LOCAL_REGISTRY : REMOTE_REGISTRY
-                    def imageTag = "${registry}/gestionEtablissement:${BUILD_NUMBER}"
-
-                    bat "docker tag gestionEtablissement ${imageTag}"
-                    bat "docker push ${imageTag}"
-                    echo "✅ Image Docker poussée vers ${registry}"
+                    bat 'docker-compose build'
                 }
             }
         }
     }
+        
 
     post {
         success {
