@@ -11,7 +11,6 @@ pipeline {
         stage('Cloner le code') {
             steps {
                 checkout scm
-                echo '✅ Le code a été cloné avec succès !'
             }
         }
 
@@ -28,7 +27,6 @@ pipeline {
                 echo '🚀 Le pipeline est bien exécuté !'
             }
         }
-
         stage('Push de l\'image Docker') {
             steps {
                 script {
@@ -39,6 +37,13 @@ pipeline {
                     bat "docker push ${imageTag}"
                     echo "✅ Image Docker poussée vers ${registry}"
                 }
+            }
+        }
+
+        // ✅ Correction : le stage 'Test' est bien dans "stages"
+        stage('Test') {
+            steps {
+                echo '🚀 Le pipeline est bien exécuté !'
             }
         }
     }
