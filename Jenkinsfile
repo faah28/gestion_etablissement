@@ -34,6 +34,14 @@ pipeline {
                 }
             }
         }
+
+         stages {
+        stage('Test') {
+            steps {
+                echo '🚀 Le pipeline est bien exécuté !'
+            }
+        }
+    }
     }
 
     post {
