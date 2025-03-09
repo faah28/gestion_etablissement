@@ -22,6 +22,12 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                echo '🚀 Le pipeline est bien exécuté !'
+            }
+        }
+        
         stage('Push de l\'image Docker') {
             steps {
                 script {
