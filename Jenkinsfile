@@ -1,24 +1,21 @@
- // Remplacez par votre nom Docker Hub    https://github.com/faah28/gestion_etablissement.git
-     pipeline { 
+pipeline {
     agent any
 
-    
     stages {
         stage('Cloner le code') {
             steps {
-                git 'https://github.com/faah28/gestion_etablissement.git'
+                git url: 'https://github.com/faah28/gestion_etablissement.git', branch: 'main'
             }
         }
 
         stage('Construire les images Docker') {
             steps {
                 script {
-                    bat 'docker-compose build'
+                    bat 'docker-compose build --no-cache'
                 }
             }
         }
     }
-        
 
     post {
         success {
