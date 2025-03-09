@@ -1,16 +1,18 @@
- // Remplacez par votre nom Docker Hub    https://github.com/faah28/gestion_etablissement.git
-       pipeline { 
+pipeline {
     agent any
 
-    
+    environment {
+        LOCAL_REGISTRY = "localhost:5000"
+        REMOTE_REGISTRY = "docker.io/faah28"
+        ENV = "dev"  // Change en "staging" ou "prod" selon le besoin
+    }
+
     stages {
         stage('Cloner le code') {
             steps {
-                git 'https://github.com/faah28/gestion_etablissement.git'
+                checkout scm
             }
         }
-
-
 
         stage('Construire les images Docker') {
             steps {
@@ -19,8 +21,6 @@
                 }
             }
         }
-
-
 
         stage('Push de l\'image Docker') {
             steps {
