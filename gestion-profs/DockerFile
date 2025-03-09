@@ -1,35 +1,39 @@
-# 1️⃣ Choix de l'image PHP avec Apache
-FROM php:8.2-apache
+# Remplace l'image de base par PHP 8.2
+FROM php:8.2-fpm
 
-# 2️⃣ Installation des extensions PHP nécessaires
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
+# Mettre à jour les paquets et nettoyer les anciens indices
+RUN apt-get clean && apt-get update
+
+# Installer les extensions nécessaires
+RUN apt-get install -y \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
     libzip-dev \
-    unzip \
     git \
-    && docker-php-ext-install pdo pdo_mysql zip
+    unzip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd zip pdo pdo_mysql \
+    && pecl install apcu \
+    && docker-php-ext-enable apcu
 
-# 3️⃣ Activation du module Apache rewrite (utile pour Symfony)
-RUN a2enmod rewrite
+# Copier Composer depuis l'image officielle de Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 4️⃣ Installation de Composer (Gestionnaire de dépendances PHP)
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Ajouter la variable d'environnement pour permettre à Composer d'exécuter des plugins en tant que root
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# 5️⃣ Définition du répertoire de travail
-WORKDIR /var/www/html
+# Définir le répertoire de travail
+WORKDIR /var/www
 
-# 6️⃣ Copie des fichiers Symfony (on exclut vendor et var dans .dockerignore)
-COPY . /var/www/html/gestion-profs
+# Copier le code de l'application dans le conteneur
+COPY . .
 
-# 7️⃣ Installation des dépendances Symfony
-RUN composer install --no-dev --optimize-autoloader
+# Installer les dépendances PHP via Composer
+RUN composer install --no-interaction --prefer-dist
 
-# 8️⃣ Attribution des permissions correctes
-RUN chown -R www-data:www-data /var/www/html/var /var/www/html/public /var/www/html/config
+# Exposer le port 9000 pour PHP-FPM
+EXPOSE 9000
 
-# 9️⃣ Exposition du port Apache
-EXPOSE 80
-
-# 🔟 Démarrage d'Apache
-CMD ["apache2-foreground"]
-                                                                                                                                                                                    
+# Commande pour lancer PHP-FPM
+CMD ["php-fpm"]

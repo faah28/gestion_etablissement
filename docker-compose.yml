@@ -1,186 +1,182 @@
+version: "3.8"
 
 services:
+ 
+ 
+
+
   gestion-classes:
     build: ./gestion-classes
     container_name: gestion-classes
-    restart: always
     ports:
       - "8000:8000"
     networks:
       - gestion-network
     volumes:
-      - ./gestion-classes:/app
+      - ./gestion-classes:/var/www/html
     depends_on:
-      db-gestion-classes:
-        condition: service_healthy
+      - db-gestion-classes
     environment:
       DB_HOST: db-gestion-classes
       DB_PORT: 3306
       DB_USERNAME: root
       DB_PASSWORD: passer
-      DB_DATABASE: gestion_classe
-    command: php -S 0.0.0.0:8000 -t /app/public
+      DB_DATABASE: gestion_classes
+    command: php -S 0.0.0.0:8000 -t public
 
   gestion-cours:
     build: ./gestion-cours
     container_name: gestion-cours
-    restart: always
     ports:
-      - "8001:8001"
+      - "8001:8000"
     networks:
       - gestion-network
     volumes:
-      - ./gestion-cours:/app
+      - ./gestion-cours:/var/www/html
     depends_on:
-      db-gestion-cours:
-        condition: service_healthy
+      - db-gestion-cours
     environment:
       DB_HOST: db-gestion-cours
       DB_PORT: 3306
       DB_USERNAME: root
       DB_PASSWORD: passer
-      DB_DATABASE: gestion_cour
-    command: php -S 0.0.0.0:8001 -t /app/public
-
-  gestion-emploi-temps:
-    build: ./gestion-emploi-temps
-    container_name: gestion-emploi-temps
-    restart: always
-    ports:
-      - "8002:8002"
-    networks:
-      - gestion-network
-    volumes:
-      - ./gestion-emploi-temps:/app
-    depends_on:
-      db-gestion-emploi-temps:
-        condition: service_healthy
-    environment:
-      DB_HOST: db-gestion-emploi-temps
-      DB_PORT: 3306
-      DB_USERNAME: root
-      DB_PASSWORD: passer
-      DB_DATABASE: gestion_emploi_temps
-    command: php -S 0.0.0.0:8002 -t /app/public
+      DB_DATABASE: gestion_cours
+    command: php -S 0.0.0.0:8000 -t public
 
   gestion-etudiants:
     build: ./gestion-etudiants
     container_name: gestion-etudiants
-    restart: always
     ports:
-      - "8003:8003"
+      - "8002:8000"
     networks:
       - gestion-network
     volumes:
-      - ./gestion-etudiants:/app
+      - ./gestion-etudiants:/var/www/html
     depends_on:
-      db-gestion-etudiants:
-        condition: service_healthy
+      - db-gestion-etudiants
     environment:
       DB_HOST: db-gestion-etudiants
       DB_PORT: 3306
       DB_USERNAME: root
       DB_PASSWORD: passer
-      DB_DATABASE: gestion_etudiant
-    command: php -S 0.0.0.0:8003 -t /app/public
+      DB_DATABASE: gestion_etudiants
+    command: php -S 0.0.0.0:8000 -t public
 
   gestion-profs:
     build: ./gestion-profs
     container_name: gestion-profs
-    restart: always
     ports:
-      - "8004:8004"
+      - "8003:8000"
     networks:
       - gestion-network
     volumes:
-      - ./gestion-profs:/app
+      - ./gestion-profs:/var/www/html
     depends_on:
-      db-gestion-profs:
-        condition: service_healthy
+      - db-gestion-profs
     environment:
       DB_HOST: db-gestion-profs
       DB_PORT: 3306
       DB_USERNAME: root
       DB_PASSWORD: passer
-      DB_DATABASE: gestion_prof
-    command: php -S 0.0.0.0:8004 -t /app/public
+      DB_DATABASE: gestion_profs
+    command: php -S 0.0.0.0:8000 -t public
 
-  # Bases de données MySQL
-  db-gestion-classes:
-    image: mysql:5.7
-    container_name: db-gestion-classes
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: passer
-    volumes:
-      - ./data/db-gestion-classes:/var/lib/mysql  # Lien vers le répertoire de données local
+  gestion-emploi-du-temps:
+    build: ./gestion-emploi-temps
+    container_name: gestion-emploi-temps
+    ports:
+      - "8004:8000"
     networks:
       - gestion-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      retries: 5
+    volumes:
+      - ./gestion-emploi-temps:/var/www/html
+    depends_on:
+      - db-gestion-emploi-temps
+    environment:
+      DB_HOST: db-gestion-emploi-temps
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: passer
+      DB_DATABASE: gestion_emplois_du_temps
+    command: php -S 0.0.0.0:8000 -t public
+
+  db-gestion-classes:
+    image: mysql:8
+    container_name: db-gestion-classes
+    environment:
+      MYSQL_ROOT_PASSWORD: passer
+      MYSQL_DATABASE: gestion_classes
+    ports:
+      - "3309:3306"
+    volumes:
+      - db_data_gestion_classes:/var/lib/mysql
+    networks:
+      - gestion-network
 
   db-gestion-cours:
-    image: mysql:5.7
+    image: mysql:8
     container_name: db-gestion-cours
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: passer
+      MYSQL_DATABASE: gestion_cours
+    ports:
+      - "3310:3306"
     volumes:
-      - ./data/db-gestion-cours:/var/lib/mysql  # Lien vers le répertoire de données local
+      - db_data_gestion_cours:/var/lib/mysql
     networks:
       - gestion-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      retries: 5
-
-  db-gestion-emploi-temps:
-    image: mysql:5.7
-    container_name: db-gestion-emploi-temps
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: passer
-    volumes:
-      - ./data/db-gestion-emploi-temps:/var/lib/mysql  # Lien vers le répertoire de données local
-    networks:
-      - gestion-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      retries: 5
 
   db-gestion-etudiants:
-    image: mysql:5.7
+    image: mysql:8
     container_name: db-gestion-etudiants
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: passer
+      MYSQL_DATABASE: gestion_etudiants
+    ports:
+      - "3311:3306"
     volumes:
-      - ./data/db-gestion-etudiants:/var/lib/mysql  # Lien vers le répertoire de données local
+      - db_data_gestion_etudiants:/var/lib/mysql
     networks:
       - gestion-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      retries: 5
 
   db-gestion-profs:
-    image: mysql:5.7
+    image: mysql:8
     container_name: db-gestion-profs
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: passer
+      MYSQL_DATABASE: gestion_profs
+    ports:
+      - "3312:3306"
     volumes:
-      - ./data/db-gestion-profs:/var/lib/mysql  # Lien vers le répertoire de données local
+      - db_data_gestion_profs:/var/lib/mysql
     networks:
       - gestion-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      retries: 5
 
+  db-gestion-emploi-temps:
+    image: mysql:8
+    container_name: db-gestion-emploi-temps
+    environment:
+      MYSQL_ROOT_PASSWORD: passer
+      MYSQL_DATABASE: gestion_emplois_du_temps
+    ports:
+      - "3313:3306"
+    volumes:
+      - db_data_gestion_emploi_temps:/var/lib/mysql
+    networks:
+      - gestion-network
+
+  
+  
+    
 networks:
   gestion-network:
     driver: bridge
+
+volumes: 
+ 
+  db_data_gestion_classes:
+  db_data_gestion_cours:
+  db_data_gestion_etudiants:
+  db_data_gestion_profs:
+  db_data_gestion_emploi_temps:
+ 
