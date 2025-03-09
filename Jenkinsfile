@@ -2,18 +2,15 @@
        pipeline { 
     agent any
 
-    environment {
-        LOCAL_REGISTRY = 'localhost:5000'
-        REMOTE_REGISTRY = 'docker.io/limatou4'
-        ENV = env.ENV ?: 'dev'  // Définit une valeur par défaut si ENV n'est pas défini
-    }
-
+    
     stages {
         stage('Cloner le code') {
             steps {
                 git 'https://github.com/faah28/gestion_etablissement.git'
             }
         }
+
+
 
         stage('Construire les images Docker') {
             steps {
@@ -22,6 +19,8 @@
                 }
             }
         }
+
+
 
         stage('Push de l\'image Docker') {
             steps {
