@@ -11,6 +11,7 @@ pipeline {
         stage('Cloner le code') {
             steps {
                 checkout scm
+                echo '✅ Le code a été cloné avec succès !'
             }
         }
 
