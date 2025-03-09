@@ -1,18 +1,16 @@
-pipeline {
+ // Remplacez par votre nom Docker Hub    https://github.com/faah28/gestion_etablissement.git
+       pipeline { 
     agent any
 
-    environment {
-        LOCAL_REGISTRY = "localhost:5000"
-        REMOTE_REGISTRY = "docker.io/faah28"
-        ENV = "dev"  // Change en "staging" ou "prod" selon le besoin
-    }
-
+    
     stages {
         stage('Cloner le code') {
             steps {
-                checkout scm
+                git 'https://github.com/faah28/gestion_etablissement.git'
             }
         }
+
+
 
         stage('Construire les images Docker') {
             steps {
@@ -22,11 +20,8 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                echo '🚀 Le pipeline est bien exécuté !'
-            }
-        }
+
+
         stage('Push de l\'image Docker') {
             steps {
                 script {
@@ -37,13 +32,6 @@ pipeline {
                     bat "docker push ${imageTag}"
                     echo "✅ Image Docker poussée vers ${registry}"
                 }
-            }
-        }
-
-        // ✅ Correction : le stage 'Test' est bien dans "stages"
-        stage('Test') {
-            steps {
-                echo '🚀 Le pipeline est bien exécuté !'
             }
         }
     }
