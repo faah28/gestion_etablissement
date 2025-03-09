@@ -1,3 +1,0 @@
-# config/packages/prometheus_exporter.yaml
-prometheus_exporter:
-  route: /metrics
