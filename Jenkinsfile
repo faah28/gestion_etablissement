@@ -35,13 +35,12 @@ pipeline {
             }
         }
 
-         stages {
+        // ✅ Correction : le stage 'Test' est bien dans "stages"
         stage('Test') {
             steps {
                 echo '🚀 Le pipeline est bien exécuté !'
             }
         }
-    }
     }
 
     post {
