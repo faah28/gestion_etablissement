@@ -27,7 +27,7 @@ pipeline {
                 echo '🚀 Le pipeline est bien exécuté !'
             }
         }
-        
+
         stage('Push de l\'image Docker') {
             steps {
                 script {
@@ -38,13 +38,6 @@ pipeline {
                     bat "docker push ${imageTag}"
                     echo "✅ Image Docker poussée vers ${registry}"
                 }
-            }
-        }
-
-        // ✅ Correction : le stage 'Test' est bien dans "stages"
-        stage('Test') {
-            steps {
-                echo '🚀 Le pipeline est bien exécuté !'
             }
         }
     }
