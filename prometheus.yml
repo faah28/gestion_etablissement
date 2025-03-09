@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'gestion-classes'
+    static_configs:
+      - targets: ['gestion-classes:8000']
+
+  - job_name: 'gestion-cours'
+    static_configs:
+      - targets: ['gestion-cours:8000']
+
+  - job_name: 'gestion-etudiants'
+    static_configs:
+      - targets: ['gestion-etudiants:8000']
+
+  - job_name: 'gestion-profs'
+    static_configs:
+      - targets: ['gestion-profs:8000']
+
+  - job_name: 'gestion-emploi-du-temps'
+    static_configs:
+      - targets: ['gestion-emploi-du-temps:8000']
+
+  - job_name: 'host-metrics'
+    static_configs:
+      - targets: ['host.docker.internal:9100']  # Pour surveiller l'hôte Docker
