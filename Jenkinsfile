@@ -38,7 +38,7 @@ pipeline {
             // Remplacer la syntaxe de la variable pour qu'elle soit interprétée
             def artifact_name = "gestionEtablissement-${BUILD_NUMBER}.tar.gz"
 
-            dir('C:\laragon\www\Gestion_etablissement') {
+            dir('C:\\laragon\\www\\Gestion_etablissement') {
                 // Créer l'archive tar.gz en utilisant la variable correctement
                 bat "tar -czvf ${artifact_name} gestion-classes gestion-cours gestion-emploi-temps gestion-etudiants gestion-profs"
             }
