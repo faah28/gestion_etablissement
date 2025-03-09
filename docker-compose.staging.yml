@@ -1,0 +1,9 @@
+services:
+  gestion-classes:
+    image: gestion_etablissement-gestion-classes:latest
+    environment:
+      DB_HOST: db-gestion-classes
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      DB_DATABASE: ${MYSQL_DATABASE}

@@ -161,6 +161,18 @@ services:
     networks:
       - gestion-network
 
+    prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - gestion-network
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: always
+
+
 networks:
   gestion-network:
     driver: bridge
@@ -171,3 +183,4 @@ volumes:
   db_data_gestion_etudiants:
   db_data_gestion_profs:
   db_data_gestion_emploi_temps:
+
